@@ -1,24 +1,37 @@
-import logo from './logo.svg';
-import './App.css';
+import axios from "axios";
+import { useState, useEffect } from "react";
 
 function App() {
+  const [characters, setCharacters] = useState([]);
+
+  useEffect(
+    () =>
+      axios
+        .get(
+          `https://last-airbender-api.herokuapp.com/api/v1/characters/random?count=5`
+        )
+        .then((res) => {
+          setCharacters(res.data);
+        }),
+    []
+  );
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <h1>Last Airbender Character</h1>
+      <ul>
+        {characters.map((character) => (
+          <li>
+            <img src={character.photoUrl}></img>
+            <p>Name: {character.name}</p>
+            <p>Profession: {character.profession || "none"}</p>
+            {character.affiliation ? (
+              <p>Affiliation: {character.affiliation}</p>
+            ) : null}
+          </li>
+        ))}
+      </ul>
+    </>
   );
 }
 
