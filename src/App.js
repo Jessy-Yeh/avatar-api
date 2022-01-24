@@ -8,7 +8,7 @@ function App() {
     () =>
       axios
         .get(
-          `https://last-airbender-api.herokuapp.com/api/v1/characters/random?count=5`
+          `https://last-airbender-api.herokuapp.com/api/v1/characters/random?count=6`
         )
         .then((res) => {
           setCharacters(res.data);
@@ -18,16 +18,26 @@ function App() {
 
   return (
     <>
-      <h1>Last Airbender Character</h1>
-      <ul>
+      <h1>Last Airbender Characters</h1>
+      <ul className="character-list">
         {characters.map((character) => (
-          <li>
-            <img src={character.photoUrl}></img>
-            <p>Name: {character.name}</p>
-            <p>Profession: {character.profession || "none"}</p>
-            {character.affiliation ? (
-              <p>Affiliation: {character.affiliation}</p>
-            ) : null}
+          <li className="character-card">
+            <div>
+              <img src={character.photoUrl}></img>
+            </div>
+            <p>
+              Name: <span className="bold">{character.name}</span>
+            </p>
+
+            <p>
+              Profession:{" "}
+              <span className="bold">{character.profession || "none"}</span>
+            </p>
+
+            <p>
+              Affiliation:{" "}
+              <span className="bold">{character.affiliation || "none"}</span>
+            </p>
           </li>
         ))}
       </ul>
